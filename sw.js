@@ -8,7 +8,7 @@
    Así el navegador tira la copia vieja y se queda con la nueva.
    ════════════════════════════════════════════════════════════════ */
 
-const VERSION = "cuentas-claras-2";
+const VERSION = "cuentas-claras-3";
 const RECURSOS = [
   "./",
   "./index.html",
