@@ -224,6 +224,16 @@ button{cursor:pointer;border:none;background:none}
 .mini dt{font-size:12.5px;color:var(--txt-3);margin:0;font-weight:600}
 .mini dd{margin:3px 0 0;font-weight:700;font-variant-numeric:tabular-nums;font-size:16px;letter-spacing:-.02em}
 .mini .apunte-nota{font-size:11.5px;color:var(--txt-3);font-weight:600;display:block;margin-top:2px}
+.pastillas-cuenta{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.pastilla-cuenta{
+  display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;
+  background:var(--hueco);border:1px solid var(--borde-color);
+  font-size:12.5px;font-weight:700;color:var(--txt-2);font-variant-numeric:tabular-nums;
+  transition:border-color .18s,color .18s;
+}
+.pastilla-cuenta:hover{border-color:var(--acento);color:var(--txt)}
+.pastilla-cuenta b{font-weight:800;color:var(--txt)}
+.pastilla-cuenta.negativa b{color:var(--rojo-luz)}
 
 /* ============================================================
    7. FORMULARIO DE ALTA
@@ -748,9 +758,10 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 
     <div class="principal">
       <section class="tarjeta resumen">
-        <p class="rotulo" id="rotuloBalance">Balance del mes</p>
+        <p class="rotulo" id="rotuloBalance">Dinero disponible ahora mismo</p>
         <strong class="cifra" id="balance">0<span class="cents">,00 €</span></strong>
         <p class="oculto-visual" id="balanceVoz" aria-live="polite"></p>
+        <div class="pastillas-cuenta" id="pastillasCuenta"></div>
 
         <dl class="par">
           <div>
@@ -762,8 +773,8 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
             <dd class="sale-dinero" id="totGastos">0 €</dd>
           </div>
           <div>
-            <dt>Ahorro</dt>
-            <dd id="tasa">&mdash;</dd>
+            <dt id="rotuloBalanceMes">Balance del mes</dt>
+            <dd id="balanceMes">0 €</dd>
           </div>
         </dl>
 
@@ -782,14 +793,14 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
             <span class="apunte-nota" id="notaMedia">Sin contar los fijos</span>
           </div>
           <div>
-            <dt>Cierre previsto</dt>
-            <dd id="proyeccion">0 €</dd>
-            <span class="apunte-nota" id="notaProyeccion">Fijos + ritmo actual</span>
+            <dt>Te quedarás con</dt>
+            <dd id="saldoFinMes">0 €</dd>
+            <span class="apunte-nota" id="notaSaldoFin">A final de mes</span>
           </div>
           <div>
-            <dt>Apuntes</dt>
-            <dd id="numApuntes">0</dd>
-            <span class="apunte-nota" id="notaApuntes">&nbsp;</span>
+            <dt>Ahorro del mes</dt>
+            <dd id="tasa">&mdash;</dd>
+            <span class="apunte-nota" id="notaTasa">De lo que ha entrado</span>
           </div>
         </dl>
       </section>
@@ -1279,6 +1290,16 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
   }
   const fechaDeFijo = (f, mes) => mes + "-" + String(Math.min(f.dia || 1, diasDeMes(mes))).padStart(2,"0");
 
+  /* Cuánto dinero quedará a final de mes: lo que hay hoy, más los apuntes
+     ya programados, menos los fijos que todavía no se han cargado. */
+  function previstoFinDeMes(){
+    const fin = finDeMes(mesActual);
+    const porCargar = fijosPendientes(mesActual).reduce((t,f) =>
+      t + (f.tipo === "ingreso" ? -(Number(f.importe) || 0) : (Number(f.importe) || 0)), 0);
+    const conApuntes = estado.cuentas.reduce((t,c) => t + saldoCuenta(c, fin), 0);
+    return { previsto: redondear(conApuntes - porCargar), porCargar: redondear(porCargar) };
+  }
+
   /* ============================================================
      D. SINCRONIZACIÓN CON SUPABASE
      El navegador es siempre la fuente inmediata: todo se guarda
@@ -1584,14 +1605,27 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 
     $("#etiquetaMes").textContent = nombreMes(mesActivo);
     $("#mesSiguiente").disabled = mesActivo >= mesDesplazado(mesActual, 12);
-    $("#rotuloBalance").textContent = esMesActual() ? "Balance de este mes" : "Balance de " + nombreMes(mesActivo).toLowerCase();
-    animaCifra($("#balance"), balance, balancePintado);
-    balancePintado = balance;
-    $("#balanceVoz").textContent = "Balance de " + nombreMes(mesActivo) + ": " + eur.format(balance);
+
+    // La cifra grande es todo el dinero que tienes hoy: no cambia al pasar de mes
+    const disponible = saldoTotal();
+    animaCifra($("#balance"), disponible, balancePintado, false);
+    balancePintado = disponible;
+    $("#pastillasCuenta").innerHTML = estado.cuentas.map(c => {
+      const s = saldoHoy(c);
+      return '<button class="pastilla-cuenta' + (s < 0 ? " negativa" : "") + '" data-ir-cuentas="1">' +
+        c.emo + " " + escapar(c.nombre) + " <b>" + eur.format(s) + "</b></button>";
+    }).join("");
 
     $("#totIngresos").textContent = eur.format(totI);
     $("#totGastos").textContent = eur.format(totG);
+    $("#rotuloBalanceMes").textContent = esMesActual() ? "Balance del mes" : "Balance de " + mesCorto(mesActivo);
+    const nodoBalanceMes = $("#balanceMes");
+    nodoBalanceMes.textContent = (balance > 0 ? "+" : balance < 0 ? "−" : "") + eur.format(Math.abs(balance));
+    nodoBalanceMes.className = balance > 0 ? "entra-dinero" : balance < 0 ? "sale-dinero" : "";
     $("#tasa").textContent = totI > 0 ? Math.round(balance / totI * 100) + " %" : "—";
+    $("#notaTasa").textContent = totI > 0 ? "De lo que ha entrado" : "Sin ingresos este mes";
+    $("#balanceVoz").textContent = "Tienes " + eur.format(disponible) +
+      ". Balance de " + nombreMes(mesActivo) + ": " + eur.format(balance);
     $("#pestGasto").textContent = eur.format(totG);
     $("#pestIngreso").textContent = eur.format(totI);
 
@@ -1619,14 +1653,15 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 
     $("#media").textContent = eur.format(media);
     const cuantosFijos = gastos.filter(esFijo).length;
-    $("#notaMedia").textContent = cuantosFijos ? "Sin contar " + cuantosFijos + " gastos fijos" : "Ritmo de este mes";
-    $("#proyeccion").textContent = eur.format(esMesActual() ? proyeccion : totG);
-    $("#notaProyeccion").textContent = esMesActual()
-      ? (fijosPorCargar ? "Incluye " + eurCorto.format(fijosPorCargar) + " de fijos por cargar" : "Al ritmo actual")
-      : "Mes cerrado";
-    $("#numApuntes").textContent = gastos.length + ingresos.length;
-    const traspasosMes = delMes("traspaso").length;
-    $("#notaApuntes").innerHTML = traspasosMes ? traspasosMes + (traspasosMes === 1 ? " traspaso" : " traspasos") : "&nbsp;";
+    $("#notaMedia").textContent = esMesActual()
+      ? "Cierre previsto: " + eurCorto.format(proyeccion)
+      : (cuantosFijos ? "Sin contar " + cuantosFijos + " gastos fijos" : "Mes cerrado");
+
+    const fin = previstoFinDeMes();
+    $("#saldoFinMes").textContent = eur.format(fin.previsto);
+    $("#notaSaldoFin").textContent = fin.porCargar > 0
+      ? "Ya descontados " + eurCorto.format(fin.porCargar) + " de fijos"
+      : "Con todo lo apuntado";
 
     pintarPendientes();
     pintarVista();
@@ -1867,8 +1902,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 
     const total = saldoTotal();
     animaCifra($("#totalCuentas"), total, total, false);
-    $("#previstoTotal").textContent = eur.format(redondear(
-      estado.cuentas.reduce((t,c) => t + saldoCuenta(c, finMes), 0) - porCargar));
+    $("#previstoTotal").textContent = eur.format(previstoFinDeMes().previsto);
     $("#pendienteCargar").textContent = eur.format(redondear(Math.max(porCargar, 0)));
     $("#numCuentas").textContent = estado.cuentas.length;
 
@@ -2630,6 +2664,9 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
     const b = e.target.closest("button"); if (!b) return;
     vista = b.dataset.vista; filtroCat = "";
     pintarVista();
+  });
+  $("#pastillasCuenta").addEventListener("click", e => {
+    if (e.target.closest("[data-ir-cuentas]")) irA("cuentas");
   });
   $("#secciones").addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
