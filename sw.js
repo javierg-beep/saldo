@@ -8,7 +8,7 @@
    Así el navegador tira la copia vieja y se queda con la nueva.
    ════════════════════════════════════════════════════════════════ */
 
-const VERSION = "cuentas-claras-3";
+const VERSION = "cuentas-claras-2";
 const RECURSOS = [
   "./",
   "./index.html",
@@ -62,9 +62,9 @@ self.addEventListener("fetch", evento => {
         if (guardada) return guardada;
         return new Response(
           "<!doctype html><meta charset='utf-8'><title>Sin conexión</title>" +
-          "<body style='font-family:system-ui;background:#0F1115;color:#F3F5F9;display:grid;place-items:center;height:100vh;margin:0;text-align:center'>" +
+          "<body style='font-family:system-ui;background:#0D1F2D;color:#F4F7F6;display:grid;place-items:center;height:100vh;margin:0;text-align:center'>" +
           "<div><h1 style='font-size:20px'>Sin conexión</h1>" +
-          "<p style='color:#98A1B2;font-size:14px'>Abre la app una vez con datos y a partir de ahí funcionará también sin ellos.</p></div>",
+          "<p style='color:#9BB0BE;font-size:14px'>Abre la app una vez con datos y a partir de ahí funcionará también sin ellos.</p></div>",
           { headers: { "Content-Type": "text/html; charset=utf-8" } }
         );
       }
