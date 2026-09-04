@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0F1115">
+<meta name="theme-color" content="#0D1F2D">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cuentas claras">
@@ -33,30 +33,36 @@
    1. TOKENS
    ============================================================ */
 :root{
-  --bg:#0F1115;
-  --tarjeta:#1A1E27;
-  --tarjeta-alta:#232838;
-  --hueco:#12151C;
-  --borde:1px solid rgba(255,255,255,.07);
-  --borde-color:rgba(255,255,255,.07);
-  --borde-fuerte:rgba(255,255,255,.14);
+  /* superficies — Azul Noche Profundo */
+  --bg:#0D1F2D;
+  --tarjeta:#13293A;
+  --tarjeta-alta:#1B384C;
+  --hueco:#0A1926;
+  --borde:1px solid rgba(244,247,246,.08);
+  --borde-color:rgba(244,247,246,.08);
+  --borde-fuerte:rgba(244,247,246,.17);
 
-  --txt:#F3F5F9;
-  --txt-2:#98A1B2;
-  --txt-3:#6B7383;
+  /* texto — Blanco Hielo */
+  --txt:#F4F7F6;
+  --txt-2:#9BB0BE;
+  --txt-3:#6E8695;
 
-  --verde:#10B981;
-  --verde-luz:#34D399;
-  --verde-velo:rgba(16,185,129,.14);
-  --rojo:#EF4444;
-  --rojo-luz:#FF6B6B;
-  --rojo-velo:rgba(239,68,68,.14);
-  --acento:#6366F1;
-  --acento-luz:#818CF8;
-  --acento-velo:rgba(99,102,241,.16);
-  --ambar:#F59E0B;
-  --ambar-luz:#FBBF24;
-  --ambar-velo:rgba(245,158,11,.14);
+  /* semánticos — Menta, Coral, Violeta */
+  --verde:#00C48F;
+  --verde-luz:#00E6A5;
+  --verde-velo:rgba(0,230,165,.14);
+  --rojo:#E23E3E;
+  --rojo-luz:#FF5252;
+  --rojo-velo:rgba(255,82,82,.15);
+  --acento:#6C5CE7;
+  --acento-luz:#8B7CFF;
+  --acento-velo:rgba(108,92,231,.20);
+  --ambar:#F5A524;
+  --ambar-luz:#FFB74D;
+  --ambar-velo:rgba(245,165,36,.14);
+
+  /* texto sobre los botones de acción, que van en menta */
+  --cta-txt:#0A1926;
 
   --r-lg:16px;
   --r-md:14px;
@@ -66,30 +72,32 @@
   --anillo:0 0 0 3px var(--acento-velo);
 }
 [data-tema="claro"]{
-  --bg:#F4F6FA;
+  --bg:#F4F7F6;
   --tarjeta:#FFFFFF;
-  --tarjeta-alta:#F7F9FC;
-  --hueco:#EDF0F6;
-  --borde:1px solid rgba(15,17,21,.07);
-  --borde-color:rgba(15,17,21,.07);
-  --borde-fuerte:rgba(15,17,21,.14);
-  --txt:#12151C;
-  --txt-2:#5A6272;
-  --txt-3:#8A93A3;
-  --verde:#0E9F6E;
-  --verde-luz:#10B981;
-  --verde-velo:rgba(14,159,110,.12);
-  --rojo:#E1414A;
-  --rojo-luz:#EF4444;
-  --rojo-velo:rgba(225,65,74,.1);
-  --acento:#5D5FEF;
-  --acento-luz:#6366F1;
-  --acento-velo:rgba(93,95,239,.12);
-  --ambar:#D97706;
-  --ambar-luz:#F59E0B;
-  --ambar-velo:rgba(217,119,6,.12);
-  --sombra:0 4px 20px -12px rgba(15,23,42,.35);
-  --sombra-alta:0 12px 32px -16px rgba(15,23,42,.35);
+  --tarjeta-alta:#F7FAF9;
+  --hueco:#EBF1EF;
+  --borde:1px solid rgba(13,31,45,.09);
+  --borde-color:rgba(13,31,45,.09);
+  --borde-fuerte:rgba(13,31,45,.18);
+  --txt:#0D1F2D;
+  --txt-2:#55707F;
+  --txt-3:#7E96A3;
+  /* la menta pura sobre blanco no se lee: en modo claro se oscurece */
+  --verde:#00A87A;
+  --verde-luz:#009B71;
+  --verde-velo:rgba(0,168,122,.13);
+  --rojo:#E23E3E;
+  --rojo-luz:#D93636;
+  --rojo-velo:rgba(255,82,82,.12);
+  --acento:#5B4BD6;
+  --acento-luz:#5A49D4;
+  --acento-velo:rgba(108,92,231,.13);
+  --ambar:#C97C08;
+  --ambar-luz:#B06D07;
+  --ambar-velo:rgba(201,124,8,.12);
+  --cta-txt:#FFFFFF;
+  --sombra:0 4px 20px -12px rgba(13,31,45,.35);
+  --sombra-alta:0 12px 32px -16px rgba(13,31,45,.32);
 }
 
 /* ============================================================
@@ -125,9 +133,9 @@ button{cursor:pointer;border:none;background:none}
 .tesela{
   width:42px;height:42px;flex:none;
   background:center/contain no-repeat;
-  filter:drop-shadow(0 6px 16px rgba(228,64,132,.34));
+  filter:drop-shadow(0 6px 16px rgba(108,92,231,.38));
 }
-[data-tema="claro"] .tesela{filter:drop-shadow(0 6px 14px rgba(228,64,132,.28))}
+[data-tema="claro"] .tesela{filter:drop-shadow(0 6px 14px rgba(108,92,231,.26))}
 .marca h1{font-weight:700;font-size:20px;letter-spacing:-.02em;margin:0}
 .marca .lema{display:block;font-size:12.5px;font-weight:500;color:var(--txt-3);letter-spacing:0}
 .utiles{display:flex;align-items:center;gap:10px}
@@ -197,6 +205,7 @@ button{cursor:pointer;border:none;background:none}
 .cifra .cents{font-size:.5em;font-weight:700;opacity:.55;letter-spacing:-.02em}
 .cifra.positivo{color:var(--verde-luz)}
 .cifra.negativo{color:var(--rojo-luz)}
+.cifra.total.positivo{color:var(--acento-luz)}
 
 .par{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:24px}
 .par > div{background:var(--hueco);border:var(--borde);border-radius:var(--r-sm);padding:13px 14px}
@@ -324,12 +333,12 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 .pie-alta input[type="date"]:focus{outline:none;border-color:var(--acento);box-shadow:var(--anillo)}
 [data-tema="oscuro"] .pie-alta input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.7)}
 .guardar{
-  flex:1;background:linear-gradient(135deg,var(--acento) 0%,var(--acento-luz) 100%);color:#fff;
-  border-radius:var(--r-md);padding:13px 16px;font-weight:700;font-size:14.5px;letter-spacing:-.01em;
-  box-shadow:0 8px 22px -12px var(--acento);
+  flex:1;background:linear-gradient(135deg,var(--verde) 0%,var(--verde-luz) 100%);color:var(--cta-txt);
+  border-radius:var(--r-md);padding:13px 16px;font-weight:800;font-size:14.5px;letter-spacing:-.01em;
+  box-shadow:0 8px 22px -12px var(--verde);
   transition:filter .18s,transform .1s,box-shadow .18s;
 }
-.guardar:hover{filter:brightness(1.08);box-shadow:0 10px 26px -10px var(--acento)}
+.guardar:hover{filter:brightness(1.06);box-shadow:0 10px 26px -10px var(--verde)}
 .guardar:active{transform:scale(.985)}
 .aviso{font-size:13px;color:var(--rojo-luz);margin:10px 0 0;font-weight:600}
 
@@ -454,9 +463,9 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 .vacio p{margin:0 0 6px;font-size:16px;font-weight:700;letter-spacing:-.02em}
 .vacio small{color:var(--txt-3);font-size:13.5px;display:block;margin-bottom:18px;font-weight:500;max-width:360px;margin-left:auto;margin-right:auto}
 .vacio button{
-  background:linear-gradient(135deg,var(--acento) 0%,var(--acento-luz) 100%);color:#fff;
-  border-radius:var(--r-md);padding:11px 20px;font-weight:700;font-size:13.5px;
-  box-shadow:0 8px 22px -12px var(--acento);transition:filter .18s}
+  background:linear-gradient(135deg,var(--verde) 0%,var(--verde-luz) 100%);color:var(--cta-txt);
+  border-radius:var(--r-md);padding:11px 20px;font-weight:800;font-size:13.5px;
+  box-shadow:0 8px 22px -12px var(--verde);transition:filter .18s}
 .vacio button:hover{filter:brightness(1.08)}
 
 /* ============================================================
@@ -514,7 +523,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 }
 .fila-fijo input:focus{outline:none;border-color:var(--acento);box-shadow:var(--anillo)}
 .btn-si{
-  background:var(--verde);color:#fff;border-radius:10px;padding:8px 13px;font-size:12.5px;font-weight:700;
+  background:var(--verde);color:var(--cta-txt);border-radius:10px;padding:8px 13px;font-size:12.5px;font-weight:700;
   transition:filter .18s;
 }
 .btn-si:hover{filter:brightness(1.1)}
@@ -591,7 +600,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
   width:100%;max-width:370px;background:var(--tarjeta);border:var(--borde);border-radius:var(--r-lg);
   padding:30px 26px;box-shadow:var(--sombra-alta);text-align:center;
 }
-#acceso img{width:56px;height:56px;margin:0 auto 16px;display:block;filter:drop-shadow(0 8px 20px rgba(228,64,132,.35))}
+#acceso img{width:56px;height:56px;margin:0 auto 16px;display:block;filter:drop-shadow(0 8px 20px rgba(108,92,231,.38))}
 #acceso h2{font-size:19px;font-weight:800;margin:0 0 4px;letter-spacing:-.02em}
 #acceso p.pie{font-size:13px;color:var(--txt-3);margin:0 0 22px;font-weight:500}
 #acceso input{
@@ -604,8 +613,8 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 #acceso .local{margin:20px 0 0;padding-top:18px;border-top:1px solid var(--borde-color);font-size:12px;color:var(--txt-3);font-weight:600}
 #acceso .local button{color:var(--acento-luz);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
-.modal{position:fixed;inset:0;z-index:70;background:rgba(6,8,12,.6);display:grid;place-items:center;padding:18px}
-[data-tema="claro"] .modal{background:rgba(15,23,42,.35)}
+.modal{position:fixed;inset:0;z-index:70;background:rgba(6,17,26,.64);display:grid;place-items:center;padding:18px}
+[data-tema="claro"] .modal{background:rgba(13,31,45,.32)}
 .modal[hidden]{display:none}
 .caja-modal{
   width:100%;max-width:430px;background:var(--tarjeta);border:var(--borde);border-radius:var(--r-lg);
@@ -787,7 +796,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
     <div class="principal">
       <section class="tarjeta resumen">
         <p class="rotulo" id="rotuloBalance">Dinero disponible ahora mismo</p>
-        <strong class="cifra" id="balance">0<span class="cents">,00 €</span></strong>
+        <strong class="cifra total" id="balance">0<span class="cents">,00 €</span></strong>
         <p class="oculto-visual" id="balanceVoz" aria-live="polite"></p>
         <div class="pastillas-cuenta" id="pastillasCuenta"></div>
 
@@ -912,7 +921,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
   <div class="hoja" id="hoja-cuentas" role="tabpanel" aria-label="Cuentas" hidden>
     <section class="tarjeta total-cuentas">
       <p class="rotulo">Dinero disponible ahora mismo</p>
-      <strong class="cifra" id="totalCuentas">0<span class="cents">,00 €</span></strong>
+      <strong class="cifra total" id="totalCuentas">0<span class="cents">,00 €</span></strong>
       <dl class="par">
         <div>
           <dt>Previsto a fin de mes</dt>
@@ -1077,37 +1086,37 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
      ============================================================ */
   const CATEGORIAS = {
     gasto: [
-      { id:"hipoteca",   nombre:"Hipoteca",      emo:"🏦", color:"#EF4444" },
-      { id:"prestamo",   nombre:"Préstamo",      emo:"💳", color:"#F43F5E" },
-      { id:"apuestas",   nombre:"Apuestas",      emo:"⚽", color:"#EC4899" },
-      { id:"casa",       nombre:"Casa",          emo:"🏠", color:"#FB7185" },
-      { id:"facturas",   nombre:"Facturas",      emo:"💡", color:"#F97316" },
-      { id:"coche",      nombre:"Coche",         emo:"🚗", color:"#FB923C" },
-      { id:"comida",     nombre:"Comida",        emo:"🛒", color:"#F59E0B" },
-      { id:"compras",    nombre:"Compras",       emo:"🛍️", color:"#FBBF24" },
-      { id:"transporte", nombre:"Transporte",    emo:"🚆", color:"#A78BFA" },
-      { id:"ocio",       nombre:"Ocio",          emo:"🍿", color:"#C084FC" },
-      { id:"salud",      nombre:"Salud",         emo:"💊", color:"#E879F9" },
-      { id:"gimnasio",   nombre:"Gimnasio",      emo:"🏋️", color:"#F472B6" },
-      { id:"suscrip",    nombre:"Suscripciones", emo:"📺", color:"#818CF8" },
-      { id:"otros",      nombre:"Otros",         emo:"✨", color:"#94A3B8" }
+      { id:"hipoteca",   nombre:"Hipoteca",      emo:"🏦", color:"#FF5252" },
+      { id:"prestamo",   nombre:"Préstamo",      emo:"💳", color:"#FF6E7A" },
+      { id:"apuestas",   nombre:"Apuestas",      emo:"⚽", color:"#FF5CA8" },
+      { id:"casa",       nombre:"Casa",          emo:"🏠", color:"#FF8A75" },
+      { id:"facturas",   nombre:"Facturas",      emo:"💡", color:"#FF9F45" },
+      { id:"coche",      nombre:"Coche",         emo:"🚗", color:"#FFB067" },
+      { id:"comida",     nombre:"Comida",        emo:"🛒", color:"#FFC94D" },
+      { id:"compras",    nombre:"Compras",       emo:"🛍️", color:"#FFD980" },
+      { id:"transporte", nombre:"Transporte",    emo:"🚆", color:"#9B8CFF" },
+      { id:"ocio",       nombre:"Ocio",          emo:"🍿", color:"#B79BFF" },
+      { id:"salud",      nombre:"Salud",         emo:"💊", color:"#D08BFF" },
+      { id:"gimnasio",   nombre:"Gimnasio",      emo:"🏋️", color:"#FF7BC8" },
+      { id:"suscrip",    nombre:"Suscripciones", emo:"📺", color:"#6C5CE7" },
+      { id:"otros",      nombre:"Otros",         emo:"✨", color:"#8FA3AE" }
     ],
     ingreso: [
-      { id:"nomina",       nombre:"Nómina",        emo:"💼", color:"#10B981" },
-      { id:"extra",        nombre:"Trabajo extra", emo:"💻", color:"#34D399" },
-      { id:"vinted",       nombre:"Vinted",        emo:"👕", color:"#2DD4BF" },
-      { id:"apuestas-win", nombre:"Apuestas",      emo:"⚽", color:"#A3E635" },
-      { id:"reembolso",    nombre:"Reembolsos",    emo:"↩️", color:"#6EE7B7" },
-      { id:"regalo",       nombre:"Regalos",       emo:"🎁", color:"#22D3EE" },
-      { id:"otros-in",     nombre:"Otros",         emo:"✨", color:"#94A3B8" }
+      { id:"nomina",       nombre:"Nómina",        emo:"💼", color:"#00E6A5" },
+      { id:"extra",        nombre:"Trabajo extra", emo:"💻", color:"#37F0BC" },
+      { id:"vinted",       nombre:"Vinted",        emo:"👕", color:"#00D4C8" },
+      { id:"apuestas-win", nombre:"Apuestas",      emo:"⚽", color:"#6FE3B0" },
+      { id:"reembolso",    nombre:"Reembolsos",    emo:"↩️", color:"#9BF2D6" },
+      { id:"regalo",       nombre:"Regalos",       emo:"🎁", color:"#29D3E8" },
+      { id:"otros-in",     nombre:"Otros",         emo:"✨", color:"#8FA3AE" }
     ],
     traspaso: [
-      { id:"traspaso", nombre:"Traspaso", emo:"⇄", color:"#818CF8" }
+      { id:"traspaso", nombre:"Traspaso", emo:"⇄", color:"#8B7CFF" }
     ]
   };
 
   const EMOJIS_CUENTA = ["🏦","💵","🐷","💳","🏠","👛","💼","🪙"];
-  const PALETA_CUENTAS = ["#6366F1","#10B981","#F59E0B","#EC4899","#22D3EE","#A78BFA","#FB7185","#34D399"];
+  const PALETA_CUENTAS = ["#6C5CE7","#00E6A5","#FFB067","#FF5CA8","#29D3E8","#9B8CFF","#FF5252","#37F0BC"];
 
   /* ────────────────────────────────────────────────────────────
      LOGO — abre tu cuentas-claras.html anterior, busca la línea
@@ -1119,11 +1128,11 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
 
   const MARCA_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
     '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
-    '<stop offset="0" stop-color="#F472B6"/><stop offset="1" stop-color="#2DD4BF"/>' +
+    '<stop offset="0" stop-color="#00E6A5"/><stop offset="1" stop-color="#6C5CE7"/>' +
     '</linearGradient></defs>' +
     '<rect x="5" y="13" width="54" height="39" rx="12" fill="url(#g)"/>' +
-    '<path d="M5 25h35a7 7 0 0 1 0 14H5z" fill="#0F1115" opacity=".18"/>' +
-    '<circle cx="46" cy="32" r="6" fill="#0F1115" opacity=".32"/>' +
+    '<path d="M5 25h35a7 7 0 0 1 0 14H5z" fill="#0D1F2D" opacity=".20"/>' +
+    '<circle cx="46" cy="32" r="6" fill="#0D1F2D" opacity=".34"/>' +
     '<circle cx="46" cy="32" r="2.4" fill="#ffffff"/></svg>';
 
   const LOGO = LOGO_PERSONAL || ("data:image/svg+xml;charset=utf-8," + encodeURIComponent(MARCA_SVG));
@@ -1595,7 +1604,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
   function aplicarTema(t, guardar = true){
     const oscuro = t === "oscuro";
     document.documentElement.dataset.tema = t;
-    document.querySelector('meta[name="theme-color"]').content = oscuro ? "#0F1115" : "#F4F6FA";
+    document.querySelector('meta[name="theme-color"]').content = oscuro ? "#0D1F2D" : "#F4F7F6";
     const boton = $("#tema");
     boton.setAttribute("aria-checked", String(oscuro));
     boton.setAttribute("aria-label", oscuro ? "Modo oscuro activado. Cambiar a modo claro" : "Modo claro activado. Cambiar a modo oscuro");
@@ -2827,7 +2836,7 @@ body.modo-traspaso .campo-importe .signo{color:var(--acento-luz);font-size:22px}
       const manifiesto = {
         name: "Cuentas claras", short_name: "Cuentas",
         start_url: location.href.split("#")[0],
-        display: "standalone", background_color: "#0F1115", theme_color: "#0F1115",
+        display: "standalone", background_color: "#0D1F2D", theme_color: "#0D1F2D",
         icons: [{ src: LOGO, sizes: "512x512", type: LOGO.indexOf("svg") > -1 ? "image/svg+xml" : "image/png", purpose: "any" }]
       };
       $("#manifiesto").href = URL.createObjectURL(new Blob([JSON.stringify(manifiesto)], { type:"application/manifest+json" }));
